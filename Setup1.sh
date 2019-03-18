@@ -165,8 +165,8 @@ echo 'Do you want to install "yay" AUR manager? [y, n] (default: y)'
 read aur
 aur=$(default_values "$aur" "y" "n")
 if [ $aur="y" ]; then
-	sudo pacman -S git
-	git clone https://aur.archlinux.org/yay.git
+	cd ~
+	sudo git clone https://aur.archlinux.org/yay.git
 	cd yay
 	makepkg -csi
 fi
