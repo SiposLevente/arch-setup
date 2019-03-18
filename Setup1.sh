@@ -49,6 +49,7 @@ echo '5 - XFCE'
 echo '6 - LXDE'
 echo '7 - LXQT'
 echo '8 - i3'
+echo 'Please enter a number: '
 read deNum
 
 case $deNum in
@@ -123,6 +124,7 @@ echo '4 - konsole'
 echo '5 - gnome terminal'
 echo '6 - termite'
 echo '7 - tilix'
+echo 'Please enter a number: '
 read term
 
 case $term in 
