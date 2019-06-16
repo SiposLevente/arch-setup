@@ -167,6 +167,7 @@ aur=$(default_values "$aur" "y" "n")
 if [ $aur="y" ]; then
 	cd ~
 	sudo git clone https://aur.archlinux.org/yay.git
+	sudo chown $USER /home/$USER/yay
 	cd yay
 	makepkg -csi
 fi
