@@ -83,7 +83,7 @@ case $deNum in
 
 		6)
 			echo 'You have selected LXDE!'
-			sudo pacman -S lxde gamin xorg xorg-xinit--noconfirm
+			sudo pacman -S lxde gamin xorg xorg-xinit --noconfirm
 			touch $HOME/.xinitrc
 			echo "#! /bin/bash" >> $HOME/.xinitrc
 			echo "exec startlxde" >> $HOME/.xinitrc
