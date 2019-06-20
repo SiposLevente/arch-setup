@@ -164,7 +164,7 @@ declare aur
 echo 'Do you want to install "yay" AUR manager? [y, n] (default: y)'
 read aur
 aur=$(default_values "$aur" "y" "n")
-if [ $aur="y" ]; then
+if [ $aur == "y" ]; then
 	cd ~
 	sudo git clone https://aur.archlinux.org/yay.git
 	sudo chown $USER /home/$USER/yay
@@ -179,7 +179,7 @@ echo 'Do you want to install additional programs? [y, n] (default: y)'
 read addons
 addons=$(default_values "$addons" "y" "n")
 
-if [ $addons="y" ]; then
+if [ $addons == "y" ]; then
 	sudo pacman -S vim pulseaudio pulseaudio-alsa ranger zip unzip xbindkeys vlc net-tools wpa_supplicant firefox gimp libreoffice
 fi
 contClear
@@ -189,7 +189,7 @@ echo 'The setup have finished!'
 echo 'Do you want to reboot? [y, n] (default: n)'
 read reb
 reb=$(default_values "$reb" "n" "y")
-if [ $reb="y" ]; then
+if [ $reb == "y" ]; then
 	sudo reboot
 else
 	echo 'If there were any problems during setup, please contact me!'
