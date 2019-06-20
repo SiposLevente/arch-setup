@@ -170,7 +170,6 @@ if [ $aur == "y" ]; then
 	sudo chown $USER /home/$USER/yay
 	cd yay
 	makepkg -csi
-	sudo pacman -U yay*.pkg.tar.xz
 fi
 contClear
 
