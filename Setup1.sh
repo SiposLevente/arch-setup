@@ -169,7 +169,8 @@ if [ $aur == "y" ]; then
 	sudo git clone https://aur.archlinux.org/yay.git
 	sudo chown $USER /home/$USER/yay
 	cd yay
-	makepkg -csi
+	makepkg -cs --noconfirm
+	sudo pacman -U yay*.pkg.tar.xz --nocondirm
 fi
 contClear
 
@@ -194,4 +195,5 @@ else
 	echo 'If there were any problems during setup, please contact me!'
 	echo 'Exiting setup...'i
 	contClear
+	su $USER
 fi
