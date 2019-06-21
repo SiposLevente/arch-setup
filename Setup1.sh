@@ -108,7 +108,7 @@ case $deNum in
 		*)
 			echo 'You have selected Gnome 3!'
 			sudo pacman -S gdm xorg gnome --noconfirm
-			sudo systemctl enable gdm.service
+			sudo systemctl enable gdm
 				;;
 esac
 
