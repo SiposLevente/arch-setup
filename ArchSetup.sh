@@ -33,7 +33,7 @@ declare answ
 declare user
 declare userRoot
 
-echo 'Do you want to create a user? [y,n] (default=y)'
+echo 'Do you want to create a user? [y,n] (default: y)'
 read answ
 
 answ=$(default_values "$answ" "y" "n")
