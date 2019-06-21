@@ -107,7 +107,7 @@ case $deNum in
 
 		*)
 			echo 'You have selected Gnome 3!'
-			sudo pacman -S xorg gnome --noconfirm
+			sudo pacman -S gdm xorg gnome --noconfirm
 			sudo systemctl enable gdm.service
 				;;
 esac
@@ -180,7 +180,7 @@ read addons
 addons=$(default_values "$addons" "y" "n")
 
 if [ $addons == "y" ]; then
-	sudo pacman -S vim pulseaudio pulseaudio-alsa ranger zip unzip xbindkeys vlc net-tools wpa_supplicant firefox gimp libreoffice
+	sudo pacman -S vim pulseaudio pulseaudio-alsa ranger zip unzip xbindkeys vlc net-tools wpa_supplicant firefox gimp libreoffice --noconfirm
 fi
 contClear
 
