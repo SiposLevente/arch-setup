@@ -37,7 +37,7 @@ echo 'Updating repositories...'
 sudo pacman -Syy
 
 echo 'Upgrading system...'
-sudo pacman -Syu
+sudo pacman -Su
 
 contClear
 echo 'Select a desktop environment! [1-8] (default:Gnome 3)'
