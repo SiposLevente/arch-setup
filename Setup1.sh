@@ -74,7 +74,7 @@ case $deNum in
 
 		5)
 			echo 'You have selected XFCE!'
-			sudo pacman -S xorg xorg-xinit xfce4 xfce4-goodies xterm xorg-twm xorg-xclock xorg-server --noconfirm
+			sudo pacman -S xorg xorg-xinit xfce4 xterm xorg-twm xorg-xclock xorg-server
 			touch $HOME/.xinitrc
 			echo "#! /bin/bash" >> $HOME/.xinitrc
 			echo "exec startxfce4" >> $HOME/.xinitrc
