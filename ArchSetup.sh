@@ -25,11 +25,10 @@ writeProf() {
 
 declare deNum
 
-echo 'Updating repositories...'
-sudo pacman -Syy
-
-echo 'Upgrading system...'
-sudo pacman -Su
+echo 'Updating and upgrading repositories...'
+sudo sh -c 'echo "[multilib]" >>  /etc/pacman.conf'
+sudo sh -c 'echo "Include = /etc/pacman.d/mirrorlist >>  /etc/pacman.conf'
+sudo pacman -Syu
 
 echo 'Select a desktop environment! [1-8] (default:Gnome 3)'
 echo '1 - Gnome 3'
@@ -171,6 +170,18 @@ if [ $aur == "y" ]; then
 	git clone https://aur.archlinux.org/paru.git
 	cd paru
 	makepkg -csi --noconfirm
+
+	declare nvidia
+	echo 'Do you want to install nvidia drivers? [y, n] (default: y)'
+	read nvidia
+	nvidia=$(default_values "$nvidia" "y" "n")
+	if [ $aur == "y" ]; then
+		paru -Sa nvidia-390xx-dkms
+		paru -Sa lib32-nvidia-390xx-utils
+		sudo pacman -S bumblebee mesa xf86-video-intel lib32-virtualgl
+		sudo gpasswd -a $USER bumblebee
+		sudo systemctl enable bumblebeed.service
+	fi
 fi
 
 declare reb
