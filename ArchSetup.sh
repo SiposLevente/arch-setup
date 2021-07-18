@@ -185,7 +185,7 @@ if [ $aur == "y" ]; then
 fi
 
 declare reb
-echo 'The setup have finished!'
+echo 'The setup has finished!'
 echo 'Do you want to reboot? [y, n] (default: n)'
 read reb
 reb=$(default_values "$reb" "n" "y")
