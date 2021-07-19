@@ -20,7 +20,6 @@ writeProf() {
 	sudo sh -c 'echo '"'"'if [[ "$(tty)" == '"'"'"'"'/dev/tty1'"'"'"'"' ]];then'"'"' >>  /etc/profile'
 	sudo sh -c 'echo "	exec startx" >>  /etc/profile'
 	sudo sh -c 'echo "fi" >>  /etc/profile'
-
 }
 
 declare deNum
@@ -64,12 +63,11 @@ case $deNum in
 
 5)
 	echo 'You have selected XFCE!'
-	sudo pacman -S xorg xorg-xinit xfce4 xterm xorg-twm xorg-xclock xorg-server
+	sudo pacman -S xorg xorg-xinit xfce4 xfce4-goodies xterm xorg-twm xorg-xclock xorg-server
 	touch $HOME/.xinitrc
 	echo "#! /bin/bash" >>$HOME/.xinitrc
 	echo "set b off" >>$HOME/.xinitrc
 	echo "xset b off" >>$HOME/.xinitrc
-	echo "setxkbmap hu" >>$HOME/.xinitrc
 	echo "exec startxfce4" >>$HOME/.xinitrc
 	writeProf
 	;;
@@ -81,7 +79,6 @@ case $deNum in
 	echo "#! /bin/bash" >>$HOME/.xinitrc
 	echo "set b off" >>$HOME/.xinitrc
 	echo "xset b off" >>$HOME/.xinitrc
-	echo "setxkbmap hu" >>$HOME/.xinitrc
 	echo "exec startlxde" >>$HOME/.xinitrc
 	writeProf
 	;;
@@ -99,7 +96,6 @@ case $deNum in
 	echo "#! /bin/bash" >>$HOME/.xinitrc
 	echo "set b off" >>$HOME/.xinitrc
 	echo "xset b off" >>$HOME/.xinitrc
-	echo "setxkbmap hu" >>$HOME/.xinitrc
 	echo "exec i3" >>$HOME/.xinitrc
 	writeProf
 	;;
