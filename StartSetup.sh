@@ -47,7 +47,7 @@ if [ $answ == "y" ]; then
 		echo "$user ALL=(ALL) ALL" >>/etc/sudoers
 	fi
 	echo "Changing user to $user"
-	su "$user" Setup1.sh
+	su "$user" ArchSetup.sh
 
 else
 	sh Setup1.sh
