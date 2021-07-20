@@ -27,7 +27,7 @@ declare deNum
 echo 'Updating and upgrading repositories...'
 sudo sh -c 'echo "[multilib]" >>  /etc/pacman.conf'
 sudo sh -c 'echo "Include = /etc/pacman.d/mirrorlist >>  /etc/pacman.conf'
-sudo pacman -Syu
+sudo pacman -Sy
 
 echo 'Select a desktop environment! [1-8] (default:Gnome 3)'
 echo '1 - Gnome 3'
