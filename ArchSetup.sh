@@ -165,8 +165,8 @@ if [ $aur == "y" ]; then
 	cd ~
 	git clone https://aur.archlinux.org/paru.git
 	cd paru
-	makepkg -csi --noconfirm
-
+	makepkg -cs
+	sudo pacman -U paru*.zst
 	declare nvidia
 	echo 'Do you want to install nvidia drivers? [y, n] (default: y)'
 	read nvidia
