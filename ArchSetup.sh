@@ -25,8 +25,6 @@ writeProf() {
 declare deNum
 
 cd ~
-pwd
-read
 echo 'Updating and upgrading repositories...'
 sudo sh -c 'echo "[multilib]" >>  /etc/pacman.conf'
 sudo sh -c 'echo "Include = /etc/pacman.d/mirrorlist" >>  /etc/pacman.conf'
@@ -168,6 +166,8 @@ if [ $aur == "y" ]; then
 	git clone https://aur.archlinux.org/paru.git
 	cd paru
 	makepkg -csi
+	ls
+	read
 	declare nvidia
 	echo 'Do you want to install nvidia drivers? [y, n] (default: y)'
 	read nvidia
