@@ -165,10 +165,8 @@ aur=$(default_values "$aur" "y" "n")
 if [ $aur == "y" ]; then
 	git clone https://aur.archlinux.org/paru.git
 	cd paru
-	makepkg -cs
-	ls
-	read
-	sudo pacman -U paru*.zst
+	sed -n 's/.*depends = //p' .SRCINFO | cut -f1 -d":" | sudo pacman -S -
+	makepkg
 	declare nvidia
 	echo 'Do you want to install nvidia drivers? [y, n] (default: y)'
 	read nvidia
