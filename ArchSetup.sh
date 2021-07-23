@@ -24,6 +24,9 @@ writeProf() {
 
 declare deNum
 
+cd ~
+pwd
+read
 echo 'Updating and upgrading repositories...'
 sudo sh -c 'echo "[multilib]" >>  /etc/pacman.conf'
 sudo sh -c 'echo "Include = /etc/pacman.d/mirrorlist" >>  /etc/pacman.conf'

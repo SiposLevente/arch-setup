@@ -48,9 +48,6 @@ if [ $answ == "y" ]; then
 	fi
 	echo "Changing user to $user"
 	su "$user" ArchSetup.sh
-	cd ~
-	pwd
-	read
 else
 	sh Setup1.sh
 fi
