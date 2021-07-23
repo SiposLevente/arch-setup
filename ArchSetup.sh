@@ -165,8 +165,7 @@ aur=$(default_values "$aur" "y" "n")
 if [ $aur == "y" ]; then
 	git clone https://aur.archlinux.org/paru.git
 	cd paru
-	makepkg -csi
-	pwd
+	makepkg -cs
 	ls
 	read
 	sudo pacman -U paru*.zst
