@@ -162,7 +162,6 @@ echo 'Do you want to install "paru" AUR manager? [y, n] (default: y)'
 read aur
 aur=$(default_values "$aur" "y" "n")
 if [ $aur == "y" ]; then
-	cd ~
 	git clone https://aur.archlinux.org/paru.git
 	cd paru
 	makepkg -csi
