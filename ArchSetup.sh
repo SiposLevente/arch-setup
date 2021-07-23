@@ -167,6 +167,7 @@ if [ $aur == "y" ]; then
 	cd paru
 	sed -n 's/.*depends = //p' .SRCINFO | cut -f1 -d":" | sudo pacman -S -
 	makepkg
+	sudo pacman -U paru*.zst
 	declare nvidia
 	echo 'Do you want to install nvidia drivers? [y, n] (default: y)'
 	read nvidia
