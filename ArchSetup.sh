@@ -159,7 +159,7 @@ case $term in
 esac
 
 declare aur
-echo 'Do you want to install "paru" AUR manager? [y, n] (default: y)'
+echo 'Do you want to install "paru" AUR manager and additional packages? [y, n] (default: y)'
 read aur
 aur=$(default_values "$aur" "y" "n")
 if [ $aur == "y" ]; then
@@ -173,11 +173,35 @@ if [ $aur == "y" ]; then
 	read nvidia
 	nvidia=$(default_values "$nvidia" "y" "n")
 	if [ $aur == "y" ]; then
-		paru -Sa nvidia-390xx-dkms
-		paru -Sa lib32-nvidia-390xx-utils
+		echo 'Do you have an old nvidia card? [y, n] (default: n)'
+		read oldDrivers
+		oldDrivers=$(default_values "$aur" "n" "y")
+		if [ $oldDrivers == "y"]; then
+			paru -Sa nvidia-390xx-dkms
+			paru -Sa nvidia-390xx-settings
+			paru -Sa nvidia-390xx-utils
+			paru -Sa lib32-nvidia-390xx-utils
+		else
+			sudo pacman -S nvidia nvidia-utils nvidia-settings lib32-nvidia-utils
+		fi
 		sudo pacman -S bumblebee mesa xf86-video-intel lib32-virtualgl
 		sudo gpasswd -a $USER bumblebee
 		sudo systemctl enable bumblebeed.service
+	fi
+
+	declare packages
+	declare aurPackages
+	packages = "gimp libreoffice-fresh virtualbox virtualbox-ext-oracle virtualbox-guest-iso virtualbox-host-modules-arch qbittorrent keepassxc zsh grml-zsh-config mpv xarchiver ntfs-3g"
+	aurPackages = "vscodium minecraft-launcher"
+	declare packageInstall
+	echo 'Do you want to install additional packages? [y, n] (default: y)'
+	echo "These packages will be installed from main repositories: $packages"
+	echo "These packages will be installed from aur: $aurPackages"
+	read packageInstall
+	nvidia=$(default_values "$nvidia" "y" "n")
+	if [ $aur == "y" ]; then
+		sudo pacman -S $packages
+		paru -Sa $aurPackages
 	fi
 fi
 
