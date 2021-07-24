@@ -189,10 +189,8 @@ if [ $aur == "y" ]; then
 		sudo systemctl enable bumblebeed.service
 	fi
 
-	declare packages
-	declare aurPackages
-	packages = "gimp libreoffice-fresh virtualbox virtualbox-ext-oracle virtualbox-guest-iso virtualbox-host-modules-arch qbittorrent keepassxc zsh grml-zsh-config mpv xarchiver ntfs-3g"
-	aurPackages = "vscodium minecraft-launcher"
+	declare packages="gimp libreoffice-fresh virtualbox virtualbox-ext-oracle virtualbox-guest-iso virtualbox-host-modules-arch qbittorrent keepassxc zsh grml-zsh-config mpv xarchiver ntfs-3g"
+	declare aurPackages="vscodium minecraft-launcher"
 	declare packageInstall
 	echo 'Do you want to install additional packages? [y, n] (default: y)'
 	echo "These packages will be installed from main repositories: $packages"
