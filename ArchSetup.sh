@@ -176,7 +176,7 @@ if [ $aur == "y" ]; then
 		echo 'Do you have an old nvidia card? [y, n] (default: n)'
 		read oldDrivers
 		oldDrivers=$(default_values "$aur" "n" "y")
-		if [ $oldDrivers == "y"]; then
+		if [ $oldDrivers == "y" ]; then
 			paru -Sa nvidia-390xx-dkms
 			paru -Sa nvidia-390xx-settings
 			paru -Sa nvidia-390xx-utils
