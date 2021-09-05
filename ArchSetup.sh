@@ -176,7 +176,7 @@ if [ $aur == "y" ]; then
 	if [ $aur == "y" ]; then
 		echo 'Do you have an old nvidia card? [y, n] (default: n)'
 		read oldDrivers
-		oldDrivers=$(default_values "$aur" "n" "y")
+		oldDrivers=$(default_values "$oldDrivers" "n" "y")
 		if [ $oldDrivers == "y" ]; then
 			paru -Sa nvidia-390xx-dkms
 			paru -Sa nvidia-390xx-settings
@@ -185,9 +185,15 @@ if [ $aur == "y" ]; then
 		else
 			sudo pacman -S nvidia nvidia-utils nvidia-settings lib32-nvidia-utils
 		fi
-		sudo pacman -S bumblebee mesa xf86-video-intel lib32-virtualgl
-		sudo gpasswd -a $USER bumblebee
-		sudo systemctl enable bumblebeed.service
+
+		echo 'Do you have want to install bumblebee (for nvidia optimus)? [y, n] (default: n)'
+		read bee
+		bee=$(default_values "$bee" "n" "y")
+		if [ $oldDrivers == "y" ]; then
+			sudo pacman -S bumblebee mesa xf86-video-intel lib32-virtualgl
+			sudo gpasswd -a $USER bumblebee
+			sudo systemctl enable bumblebeed.service
+		fi
 	fi
 
 	declare packages="gimp libreoffice-fresh virtualbox virtualbox-guest-iso virtualbox-host-modules-arch qbittorrent keepassxc zsh mpv ntfs-3g"
