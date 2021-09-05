@@ -22,8 +22,6 @@ writeProf() {
 	sudo sh -c 'echo "fi" >>  /etc/profile'
 }
 
-declare deNum
-
 cd ~
 echo 'Updating and upgrading repositories...'
 sudo sh -c 'echo "[multilib]" >>  /etc/pacman.conf'
@@ -59,12 +57,6 @@ case $deNum in
 	echo 'You have selected Mate!'
 	sudo pacman -S xorg mate mate-extra lxdm
 	sudo systemctl enable lxdm.service
-	;;
-
-*)
-	echo 'You have selected KDE!'
-	sudo pacman -S plasma sddm ark
-	sudo systemctl enable sddm
 	;;
 
 5)
@@ -105,13 +97,18 @@ case $deNum in
 	echo "exec i3" >>$HOME/.xinitrc
 	writeProf
 	;;
+
+*)
+	echo 'You have selected KDE!'
+	sudo pacman -S plasma sddm ark dolphin dolphin-plugins
+	sudo systemctl enable sddm
+	;;
 esac
 
 sudo systemctl enable NetworkManager.service
 
 echo 'Desktop Environment has been installed on the machine!'
 
-declare term
 echo 'Select a terminal emulator! [1-8] (default: other)'
 echo '1 - rxvt-unicode'
 echo '2 - kitty'
@@ -159,7 +156,6 @@ case $term in
 
 esac
 
-declare aur
 echo 'Do you want to install "paru" AUR manager and additional packages? [y, n] (default: y)'
 read aur
 aur=$(default_values "$aur" "y" "n")
@@ -174,11 +170,22 @@ fi
 echo 'Do you have intel or amd cpu? [intel, amd] (default: intel)'
 read cpu
 cpu=$(default_values "$cpu" "intel" "amd")
+if [ $cpu == "intel" ]; then
+	sudo pacman -S intel-ucode
+else
+	sudo pacman -S amd-ucode lm_sensors
+fi
 
-declare nvidia
-echo 'Do you want to install nvidia drivers? [y, n] (default: y)'
+echo 'Do you have integrated intel graphics? [y, n] (default: n)'
+read integrated
+integrated=$(default_values "$integrated" "n" "y")
+if [ $integrated == "y" ]; then
+	sudo pacman -S mesa lib32-mesa xf86-video-intel vulkan-intel
+fi
+
+echo 'Do you want to install nvidia gpu drivers? [y, n] (default: n)'
 read nvidia
-nvidia=$(default_values "$nvidia" "y" "n")
+nvidia=$(default_values "$nvidia" "n" "y")
 if [ $nvidia == "y" ]; then
 	echo 'Do you have an old nvidia card? [y, n] (default: n)'
 	read oldDrivers
@@ -202,6 +209,13 @@ if [ $nvidia == "y" ]; then
 	fi
 fi
 
+echo 'Do you want to install amd gpu drivers? [y, n] (default: n)'
+read amd
+amd=$(default_values "$amd" "n" "y")
+if [ $amd == "y" ]; then
+	sudo pacman -S mesa lib32-mesa xf86-video-ati xf86-video-amdgpu mesa-vdpau lib32-mesa-vdpau
+fi
+
 declare packages="gimp libreoffice-fresh virtualbox virtualbox-guest-iso virtualbox-host-modules-arch qbittorrent keepassxc zsh mpv ntfs-3g"
 declare aurPackages="vscodium virtualbox-ext-oracle"
 declare packageInstall
@@ -219,7 +233,6 @@ if [ $packageInstall == "y" ]; then
 	fi
 fi
 
-declare reb
 echo 'The setup has finished!'
 echo 'Do you want to reboot? [y, n] (default: n)'
 read reb
