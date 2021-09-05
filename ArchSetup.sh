@@ -112,7 +112,7 @@ sudo systemctl enable NetworkManager.service
 echo 'Desktop Environment has been installed on the machine!'
 
 declare term
-echo 'Select a terminal emulator! [1-8] (default:rxvt)'
+echo 'Select a terminal emulator! [1-8] (default: other)'
 echo '1 - rxvt-unicode'
 echo '2 - kitty'
 echo '3 - terminator'
