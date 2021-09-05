@@ -30,11 +30,11 @@ sudo sh -c 'echo "[multilib]" >>  /etc/pacman.conf'
 sudo sh -c 'echo "Include = /etc/pacman.d/mirrorlist" >>  /etc/pacman.conf'
 sudo pacman -Sy
 
-echo 'Select a desktop environment! [1-8] (default:Gnome 3)'
+echo 'Select a desktop environment! [1-8] (default:KDE)'
 echo '1 - Gnome 3'
 echo '2 - Cinnamon'
 echo '3 - Mate'
-echo '4 - KDE Plasma'
+echo '4 - KDE'
 echo '5 - XFCE'
 echo '6 - LXDE'
 echo '7 - LXQT'
@@ -43,8 +43,13 @@ echo 'Please enter a number: '
 read deNum
 
 case $deNum in
+1)
+	echo 'You have selected Gnome 3!'
+	sudo pacman -S gdm xorg gnome
+	sudo systemctl enable gdm
+	;;
+
 2)
-	clear
 	echo 'You have selected Cinnamon!'
 	sudo pacman -S xorg gdm mesa xterm xorg-twm xorg-xclock cinnamon nemo-fileroller
 	sudo systemctl enable gdm
@@ -56,15 +61,15 @@ case $deNum in
 	sudo systemctl enable lxdm.service
 	;;
 
-4)
+*)
 	echo 'You have selected KDE!'
-	sudo pacman -S plasma sddm
+	sudo pacman -S plasma sddm ark
 	sudo systemctl enable sddm
 	;;
 
 5)
 	echo 'You have selected XFCE!'
-	sudo pacman -S xorg xorg-xinit xfce4 xfce4-goodies xterm xorg-twm xorg-xclock xorg-server
+	sudo pacman -S xorg xorg-xinit xfce4 xfce4-goodies xterm xorg-twm xorg-xclock xorg-server pavucontrol
 	touch $HOME/.xinitrc
 	echo "#! /bin/bash" >>$HOME/.xinitrc
 	echo "set b off" >>$HOME/.xinitrc
@@ -100,18 +105,12 @@ case $deNum in
 	echo "exec i3" >>$HOME/.xinitrc
 	writeProf
 	;;
-
-*)
-	echo 'You have selected Gnome 3!'
-	sudo pacman -S gdm xorg gnome
-	sudo systemctl enable gdm
-	;;
 esac
 
 echo 'Desktop Environment has been installed on the machine!'
 
 declare term
-echo 'Select a terminal emulator! [1-6] (default:rxvt)'
+echo 'Select a terminal emulator! [1-8] (default:rxvt)'
 echo '1 - rxvt-unicode'
 echo '2 - kitty'
 echo '3 - terminator'
@@ -189,17 +188,19 @@ if [ $aur == "y" ]; then
 		sudo systemctl enable bumblebeed.service
 	fi
 
-	declare packages="gimp libreoffice-fresh virtualbox virtualbox-guest-iso virtualbox-host-modules-arch qbittorrent keepassxc zsh grml-zsh-config mpv xarchiver ntfs-3g"
-	declare aurPackages="vscodium minecraft-launcher virtualbox-ext-oracle"
+	declare packages="gimp libreoffice-fresh virtualbox virtualbox-guest-iso virtualbox-host-modules-arch qbittorrent keepassxc zsh mpv ntfs-3g"
+	declare aurPackages="vscodium virtualbox-ext-oracle"
 	declare packageInstall
-	echo 'Do you want to install additional packages? [y, n] (default: y)'
 	echo "These packages will be installed from main repositories: $packages"
 	echo "These packages will be installed from aur: $aurPackages"
-	read packageInstall
-	nvidia=$(default_values "$nvidia" "y" "n")
-	if [ $aur == "y" ]; then
+	echo 'Do you want to install additional packages? [y, n] (default: y)'
+        read packageInstall
+	packageInstall=$(default_values "$packageInstall" "y" "n")
+	if [ $packageInstall == "y" ]; then
 		sudo pacman -S $packages
-		paru -Sa $aurPackages
+		if [ $aur == "y" ]; then
+             	        paru -Sa $aurPackages
+                fi
 	fi
 fi
 
