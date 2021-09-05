@@ -107,6 +107,8 @@ case $deNum in
 	;;
 esac
 
+sudo systemctl enable NetworkManager.service
+
 echo 'Desktop Environment has been installed on the machine!'
 
 declare term
@@ -194,13 +196,13 @@ if [ $aur == "y" ]; then
 	echo "These packages will be installed from main repositories: $packages"
 	echo "These packages will be installed from aur: $aurPackages"
 	echo 'Do you want to install additional packages? [y, n] (default: y)'
-        read packageInstall
+	read packageInstall
 	packageInstall=$(default_values "$packageInstall" "y" "n")
 	if [ $packageInstall == "y" ]; then
 		sudo pacman -S $packages
 		if [ $aur == "y" ]; then
-             	        paru -Sa $aurPackages
-                fi
+			paru -Sa $aurPackages
+		fi
 	fi
 fi
 
