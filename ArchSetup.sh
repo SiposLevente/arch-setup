@@ -169,48 +169,49 @@ if [ $aur == "y" ]; then
 	sed -n 's/.*depends = //p' .SRCINFO | cut -f1 -d":" | sudo pacman -S -
 	makepkg
 	sudo pacman -U paru*.zst
-	declare nvidia
-	echo 'Do you want to install nvidia drivers? [y, n] (default: y)'
-	read nvidia
-	nvidia=$(default_values "$nvidia" "y" "n")
-	if [ $aur == "y" ]; then
-		echo 'Do you have an old nvidia card? [y, n] (default: n)'
-		read oldDrivers
-		oldDrivers=$(default_values "$oldDrivers" "n" "y")
-		if [ $oldDrivers == "y" ]; then
-			paru -Sa nvidia-390xx-dkms
-			paru -Sa nvidia-390xx-settings
-			paru -Sa nvidia-390xx-utils
-			paru -Sa lib32-nvidia-390xx-utils
-		else
-			sudo pacman -S nvidia nvidia-utils nvidia-settings lib32-nvidia-utils
-		fi
+fi
 
-		echo 'Do you have want to install bumblebee (for nvidia optimus)? [y, n] (default: n)'
-		read bee
-		bee=$(default_values "$bee" "n" "y")
-		if [ $oldDrivers == "y" ]; then
-			sudo pacman -S bumblebee mesa xf86-video-intel lib32-virtualgl
-			sudo gpasswd -a $USER bumblebee
-			sudo systemctl enable bumblebeed.service
-		fi
+declare nvidia
+echo 'Do you want to install nvidia drivers? [y, n] (default: y)'
+read nvidia
+nvidia=$(default_values "$nvidia" "y" "n")
+if [ $nvidia == "y" ]; then
+	echo 'Do you have an old nvidia card? [y, n] (default: n)'
+	read oldDrivers
+	oldDrivers=$(default_values "$oldDrivers" "n" "y")
+	if [ $oldDrivers == "y" ]; then
+		paru -Sa nvidia-390xx-dkms
+		paru -Sa nvidia-390xx-settings
+		paru -Sa nvidia-390xx-utils
+		paru -Sa lib32-nvidia-390xx-utils
+	else
+		sudo pacman -S nvidia nvidia-utils nvidia-settings lib32-nvidia-utils
 	fi
 
-	declare packages="gimp libreoffice-fresh virtualbox virtualbox-guest-iso virtualbox-host-modules-arch qbittorrent keepassxc zsh mpv ntfs-3g"
-	declare aurPackages="vscodium virtualbox-ext-oracle"
-	declare packageInstall
-	echo "These packages will be installed from main repositories: $packages"
-	if [ $aur == "y" ]; then
-		echo "These packages will be installed from aur: $aurPackages"
+	echo 'Do you have want to install bumblebee (for nvidia optimus)? [y, n] (default: n)'
+	read bee
+	bee=$(default_values "$bee" "n" "y")
+	if [ $bee == "y" ]; then
+		sudo pacman -S bumblebee mesa xf86-video-intel lib32-virtualgl
+		sudo gpasswd -a $USER bumblebee
+		sudo systemctl enable bumblebeed.service
 	fi
-	echo 'Do you want to install additional packages? [y, n] (default: y)'
-	read packageInstall
-	packageInstall=$(default_values "$packageInstall" "y" "n")
-	if [ $packageInstall == "y" ]; then
-		sudo pacman -S $packages
-		if [ $aur == "y" ]; then
-			paru -Sa $aurPackages
-		fi
+fi
+
+declare packages="gimp libreoffice-fresh virtualbox virtualbox-guest-iso virtualbox-host-modules-arch qbittorrent keepassxc zsh mpv ntfs-3g"
+declare aurPackages="vscodium virtualbox-ext-oracle"
+declare packageInstall
+echo "These packages will be installed from main repositories: $packages"
+if [ $aur == "y" ]; then
+	echo "These packages will be installed from aur: $aurPackages"
+fi
+echo 'Do you want to install additional packages? [y, n] (default: y)'
+read packageInstall
+packageInstall=$(default_values "$packageInstall" "y" "n")
+if [ $packageInstall == "y" ]; then
+	sudo pacman -S $packages
+	if [ $aur == "y" ]; then
+		paru -Sa $aurPackages
 	fi
 fi
 
