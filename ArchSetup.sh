@@ -171,6 +171,10 @@ if [ $aur == "y" ]; then
 	sudo pacman -U paru*.zst
 fi
 
+echo 'Do you have intel or amd cpu? [intel, amd] (default: intel)'
+read cpu
+cpu=$(default_values "$cpu" "intel" amd)
+
 declare nvidia
 echo 'Do you want to install nvidia drivers? [y, n] (default: y)'
 read nvidia
