@@ -22,15 +22,15 @@ echo 'Press ENTER to continue...'
 read
 clear
 
-declare answ
+declare changeuser
 declare user
 declare userRoot
 
 echo 'Do you want to create a user? [y,n] (default: y)'
-read answ
+read changeuser
 
-answ=$(default_values "$answ" "y" "n")
-if [ $answ == "y" ]; then
+changeuser=$(default_values "$changeuser" "y" "n")
+if [ $changeuser == "y" ]; then
 
 	echo 'Creating a user'
 	echo 'What do you want to name your user?'
@@ -49,5 +49,15 @@ if [ $answ == "y" ]; then
 	echo "Changing user to $user"
 	su "$user" ArchSetup.sh
 else
-	sh ArchSetup.sh
+	echo 'Do you want to change user? [y,n] (default: y)'
+	read changeuser
+	changeuser=$(default_values "$changeuser" "y" "n")
+
+	if [ $changeuser == "y" ]; then
+		echo 'Please type the name of the user:'
+		read user
+		su "$user" ArchSetup.sh
+	else
+		sh ArchSetup.sh
+	fi
 fi
