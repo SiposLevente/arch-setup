@@ -194,7 +194,9 @@ if [ $aur == "y" ]; then
 	declare aurPackages="vscodium virtualbox-ext-oracle"
 	declare packageInstall
 	echo "These packages will be installed from main repositories: $packages"
-	echo "These packages will be installed from aur: $aurPackages"
+	if [ $aur == "y" ]; then
+		echo "These packages will be installed from aur: $aurPackages"
+	fi
 	echo 'Do you want to install additional packages? [y, n] (default: y)'
 	read packageInstall
 	packageInstall=$(default_values "$packageInstall" "y" "n")
