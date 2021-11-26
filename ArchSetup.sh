@@ -98,6 +98,9 @@ case $deNum in
 	writeProf
 	;;
 
+9)
+	echo 'You have selected none!'
+
 *)
 	echo 'You have selected KDE!'
 	sudo pacman -S plasma sddm ark dolphin dolphin-plugins
@@ -216,8 +219,8 @@ if [ $amd == "y" ]; then
 	sudo pacman -S mesa lib32-mesa xf86-video-ati xf86-video-amdgpu mesa-vdpau lib32-mesa-vdpau
 fi
 
-declare packages="gimp libreoffice-fresh virtualbox virtualbox-guest-iso virtualbox-host-modules-arch qbittorrent keepassxc zsh mpv ntfs-3g"
-declare aurPackages="vscodium virtualbox-ext-oracle"
+declare packages="gimp libreoffice-fresh virtualbox virtualbox-guest-iso virtualbox-host-modules-arch qbittorrent keepassxc zsh mpv ntfs-3g firefox"
+declare aurPackages="vscodium virtualbox-ext-oracle cpupower-gui"
 declare packageInstall
 echo "These packages will be installed from main repositories: $packages"
 if [ $aur == "y" ]; then
