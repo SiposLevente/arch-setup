@@ -37,6 +37,7 @@ echo '5 - XFCE'
 echo '6 - LXDE'
 echo '7 - LXQT'
 echo '8 - i3'
+echo '9 - Don not install a desktop enviroment!'
 echo 'Please enter a number: '
 read deNum
 
@@ -100,6 +101,7 @@ case $deNum in
 
 9)
 	echo 'You have selected none!'
+	;;
 
 *)
 	echo 'You have selected KDE!'
