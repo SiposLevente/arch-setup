@@ -23,10 +23,14 @@ writeProf() {
 }
 
 cd ~
-echo 'Updating and upgrading repositories...'
-sudo sh -c 'echo "[multilib]" >>  /etc/pacman.conf'
-sudo sh -c 'echo "Include = /etc/pacman.d/mirrorlist" >>  /etc/pacman.conf'
-sudo pacman -Sy
+
+ertek=`grep -i "multilib" /etc/pacman.conf | wc -l `
+if [ $ertek -lt 3 ];then
+	echo 'Updating and upgrading repositories...'
+	sudo sh -c 'echo "[multilib]" >>  /etc/pacman.conf'
+	sudo sh -c 'echo "Include = /etc/pacman.d/mirrorlist" >>  /etc/pacman.conf'
+	sudo pacman -Sy
+fi
 
 echo 'Select a desktop environment! [1-8] (default:KDE)'
 echo '1 - Gnome 3'
