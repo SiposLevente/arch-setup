@@ -172,53 +172,66 @@ if [ $aur == "y" ]; then
 	sudo pacman -U paru*.zst
 fi
 
-echo 'Do you have intel or amd cpu? [intel, amd] (default: intel)'
-read cpu
-cpu=$(default_values "$cpu" "intel" "amd")
-if [ $cpu == "intel" ]; then
-	sudo pacman -S intel-ucode
-else
-	sudo pacman -S amd-ucode lm_sensors
-fi
 
-echo 'Do you have integrated intel graphics? [y, n] (default: n)'
-read integrated
-integrated=$(default_values "$integrated" "n" "y")
-if [ $integrated == "y" ]; then
-	sudo pacman -S mesa lib32-mesa xf86-video-intel vulkan-intel
-fi
-
-echo 'Do you want to install nvidia gpu drivers? [y, n] (default: n)'
-read nvidia
-nvidia=$(default_values "$nvidia" "n" "y")
-if [ $nvidia == "y" ]; then
-	echo 'Do you have an old nvidia card? [y, n] (default: n)'
-	read oldDrivers
-	oldDrivers=$(default_values "$oldDrivers" "n" "y")
-	if [ $oldDrivers == "y" ]; then
-		paru -Sa nvidia-390xx-dkms
-		paru -Sa nvidia-390xx-settings
-		paru -Sa nvidia-390xx-utils
-		paru -Sa lib32-nvidia-390xx-utils
+echo 'Do you want to install ucode for your cpu? [y, n] (default: y)'
+read ucode
+ucode=$(default_values "$ucode" "y" "n")
+if [ $ucode == "y" ]; then
+	echo 'Do you have intel or amd cpu? [intel, amd] (default: intel)'
+	read cpu
+	cpu=$(default_values "$cpu" "intel" "amd")
+	if [ $cpu == "intel" ]; then
+		sudo pacman -S intel-ucode
 	else
-		sudo pacman -S nvidia nvidia-utils nvidia-settings lib32-nvidia-utils
-	fi
-
-	echo 'Do you have want to install bumblebee (for nvidia optimus)? [y, n] (default: n)'
-	read bee
-	bee=$(default_values "$bee" "n" "y")
-	if [ $bee == "y" ]; then
-		sudo pacman -S bumblebee mesa xf86-video-intel lib32-virtualgl
-		sudo gpasswd -a $USER bumblebee
-		sudo systemctl enable bumblebeed.service
+		sudo pacman -S amd-ucode lm_sensors
 	fi
 fi
 
-echo 'Do you want to install amd gpu drivers? [y, n] (default: n)'
-read amd
-amd=$(default_values "$amd" "n" "y")
-if [ $amd == "y" ]; then
-	sudo pacman -S mesa lib32-mesa xf86-video-ati xf86-video-amdgpu mesa-vdpau lib32-mesa-vdpau
+
+echo 'Do you want to install gpu drivers? [y, n] (default: y)'
+read gpu
+gpu=$(default_values "$gpu" "y" "n")
+if [ $gpu == "y" ]; then
+
+	echo 'Do you have integrated intel graphics? [y, n] (default: n)'
+	read integrated
+	integrated=$(default_values "$integrated" "n" "y")
+	if [ $integrated == "y" ]; then
+		sudo pacman -S mesa lib32-mesa xf86-video-intel vulkan-intel
+	fi
+
+	echo 'Do you want to install nvidia gpu drivers? [y, n] (default: n)'
+	read nvidia
+	nvidia=$(default_values "$nvidia" "n" "y")
+	if [ $nvidia == "y" ]; then
+		echo 'Do you have an old nvidia card? [y, n] (default: n)'
+		read oldDrivers
+		oldDrivers=$(default_values "$oldDrivers" "n" "y")
+		if [ $oldDrivers == "y" ]; then
+			paru -Sa nvidia-390xx-dkms
+			paru -Sa nvidia-390xx-settings
+			paru -Sa nvidia-390xx-utils
+			paru -Sa lib32-nvidia-390xx-utils
+		else
+			sudo pacman -S nvidia nvidia-utils nvidia-settings lib32-nvidia-utils
+		fi
+
+		echo 'Do you have want to install bumblebee (for nvidia optimus)? [y, n] (default: n)'
+		read bee
+		bee=$(default_values "$bee" "n" "y")
+		if [ $bee == "y" ]; then
+			sudo pacman -S bumblebee mesa xf86-video-intel lib32-virtualgl
+			sudo gpasswd -a $USER bumblebee
+			sudo systemctl enable bumblebeed.service
+		fi
+	fi
+
+	echo 'Do you want to install amd gpu drivers? [y, n] (default: n)'
+	read amd
+	amd=$(default_values "$amd" "n" "y")
+	if [ $amd == "y" ]; then
+		sudo pacman -S mesa lib32-mesa xf86-video-ati xf86-video-amdgpu mesa-vdpau lib32-mesa-vdpau
+	fi
 fi
 
 declare packages="gimp libreoffice-fresh virtualbox virtualbox-guest-iso virtualbox-host-modules-arch qbittorrent keepassxc zsh mpv ntfs-3g firefox"
