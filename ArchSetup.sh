@@ -37,7 +37,7 @@ echo '5 - XFCE'
 echo '6 - LXDE'
 echo '7 - LXQT'
 echo '8 - i3'
-echo '9 - Don not install a desktop enviroment!'
+echo '9 - Do not install a desktop enviroment!'
 echo 'Please enter a number: '
 read deNum
 
